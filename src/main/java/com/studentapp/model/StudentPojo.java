@@ -2,6 +2,7 @@ package com.studentapp.model;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,12 +52,13 @@ public class StudentPojo {
     public List<String> getCourses() {
         return courses;
     }
+
     public void setCourses(List<String> courses) {
         this.courses = courses;
     }
 
     public static StudentPojo getStudentPojo(String firstName, String lastName, String email,
-                                             String programme, List<String> courses){
+                                             String programme, List<String> courses) {
         StudentPojo studentPojo = new StudentPojo();
         studentPojo.setFirstName(firstName);
         studentPojo.setLastName(lastName);
@@ -64,5 +66,18 @@ public class StudentPojo {
         studentPojo.setProgramme(programme);
         studentPojo.setCourses(courses);
         return studentPojo;
+    }
+
+    public static StudentPojo getStudentPojoForPatchMethod(String email) {
+        StudentPojo studentPojo = new StudentPojo();
+        studentPojo.setEmail(email);
+        return studentPojo;
+    }
+
+    public static List<String> courseList(String course1, String course2){
+        List<String> courseList = new ArrayList<>();
+        courseList.add(course1);
+        courseList.add(course2);
+        return courseList;
     }
 }

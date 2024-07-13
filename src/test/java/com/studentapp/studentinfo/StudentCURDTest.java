@@ -1,5 +1,6 @@
 package com.studentapp.studentinfo;
 
+import com.studentapp.constants.EndPoints;
 import com.studentapp.model.StudentPojo;
 import com.studentapp.testbase.TestBase;
 import com.studentapp.utils.TestUtils;
@@ -18,6 +19,7 @@ import static org.hamcrest.Matchers.hasValue;
 /**
  * Created by Jay
  */
+//@RunWith(SerenityRunner.class)
 public class StudentCURDTest extends TestBase {
 
     static String firstName = TestUtils.getRandomValue() + "PrimeUser";
@@ -28,6 +30,7 @@ public class StudentCURDTest extends TestBase {
     static int studentId;
 
 
+    @Title("This will create a new student")
     @Test
     public void test001(){
         List<String> courseList = new ArrayList<>();
@@ -58,7 +61,7 @@ public class StudentCURDTest extends TestBase {
 
         HashMap<String, Object> studentMap = SerenityRest.given()
                 .when()
-                .get("/list")
+                .get(EndPoints.GET_ALL_STUDENT)
                 .then().statusCode(200)
                 .extract()
                 .path(s1 + firstName + s2);
@@ -90,14 +93,14 @@ public class StudentCURDTest extends TestBase {
                 .pathParam("studentID", studentId)
                 .body(studentPojo)
                 .when()
-                .put("/{studentID}")
+                .put(EndPoints.UPDATE_STUDENT_BY_ID)
                 .then().log().all().statusCode(200);
 
         String s1 = "findAll{it.firstName == '";
         String s2 = "'}.get(0)";
         HashMap<String, Object> studentMap = SerenityRest.given()
                 .when()
-                .get("/list")
+                .get(EndPoints.GET_ALL_STUDENT)
                 .then().statusCode(200)
                 .extract()
                 .path(s1 + firstName + s2);
@@ -111,14 +114,14 @@ public class StudentCURDTest extends TestBase {
         SerenityRest.given().log().all()
                 .pathParam("studentID", studentId)
                 .when()
-                .delete("/{studentID}")
+                .delete(EndPoints.DELETE_STUDENT_BY_ID)
                 .then()
                 .statusCode(204);
 
         SerenityRest.given().log().all()
                 .pathParam("studentID", studentId)
                 .when()
-                .get("/{studentID}")
+                .get(EndPoints.GET_SINGLE_STUDENT_BY_ID)
                 .then()
                 .statusCode(404);
     }
