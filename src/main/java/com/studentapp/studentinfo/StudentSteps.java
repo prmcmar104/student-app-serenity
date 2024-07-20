@@ -41,6 +41,18 @@ public class StudentSteps {
                 .path(s1 + firstName + s2);
     }
 
+    @Step("Getting the Student information with email : {0}")
+    public HashMap<String, Object> getStudentInfoByEmail(String email) {
+        String s1 = "findAll{it.email == '";
+        String s2 = "'}.get(0)";
+        return SerenityRest.given()
+                .when()
+                .get(EndPoints.GET_ALL_STUDENT)
+                .then().statusCode(200)
+                .extract()
+                .path(s1 + email + s2);
+    }
+
     @Step("Updating student information with studentId: {0}, firstName: {1}, lastName: {2}, email: {3}, programme: {4} and courses: {5}")
     public ValidatableResponse updateStudent(int studentId, String firstName, String lastName, String email,
                                              String programme, List<String> courseList) {
@@ -70,6 +82,13 @@ public class StudentSteps {
                 .pathParam("studentID", studentId)
                 .when()
                 .get(EndPoints.GET_SINGLE_STUDENT_BY_ID)
+                .then();
+    }
+
+    @Step("Getting all the students information")
+    public ValidatableResponse getAllStudentInfo(){
+        return SerenityRest.given()
+                .when().get(EndPoints.GET_ALL_STUDENT)
                 .then();
     }
 

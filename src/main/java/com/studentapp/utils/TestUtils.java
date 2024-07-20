@@ -22,4 +22,9 @@ public class TestUtils {
 		return faker.name().lastName();
 	}
 
+	public static String generateEmail(){
+		Faker faker = new Faker();
+		return faker.internet().emailAddress();
+	}
+
 }
